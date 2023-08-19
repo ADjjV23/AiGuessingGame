@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Interactive AI Number Guess</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #bd2828;
+        }
+
+        header {
+            background-color: #333;
+            color: rgb(170, 28, 132);
+            text-align: center;
+            padding: 1rem;
+        }
+
+        nav {
+            background-color: #444;
+            color: rgb(12, 67, 77);
+            text-align: center;
+            padding: 0.5rem;
+        }
+
+        section {
+            margin: 1rem;
+            padding: 1rem;
+            background-color: rgb(149, 159, 15);
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.2);
+        }
+
+        footer {
+            background-color: #333;
+            color: rgb(163, 60, 5);
+            text-align: center;
+            padding: 0.5rem;
+        }
+    </style>
+    </style>
+</head>
+
+<body>
+    <header>
+        <h1>Power Style HTML</h1>
+    </header>
+    <nav>
+        <a href="#">Home</a> |
+        <a href="#">About</a> |
+        <a href="#">Services</a> |
+        <a href="#">Contact</a>
+    </nav>
+    <section>
+        <h2>Welcome to the Power Style HTML Page</h2>
+        <p>This is a demonstration of a minimalistic and power-styled HTML structure.</p>
+    </section>
+    <h1>Interactive AI Number Guess</h1>
+    <p>Collaborate with the AI to discover the hidden number!</p>
+    <button id="startButton">Initialize AI</button>
+    <p>AI's Estimate: <span id="guessDisplay">-</span></p>
+    <p>Target Value: <span id="correctNumber">-</span></p>
+    <p>Provide a hint: <input placeholder="button" type="number" id="hintInput" min="1" max="100">
+        <button id="hintButton">Give Hint</button>
+    </p>
+
+    <script>
+        let correctNumber;
+        let aiMinGuess = 1;
+        let aiMaxGuess = 100;
+        let aiGuess;
+
+        document.getElementById("startButton").addEventListener("click", startGame);
+        document.getElementById("hintButton").addEventListener("click", provideHint);
+
+        function startGame() {
+            correctNumber = generateRandomNumber(aiMinGuess, aiMaxGuess);
+            aiGuess = Math.floor((aiMinGuess + aiMaxGuess) / 2);
+            document.getElementById("correctNumber").textContent = correctNumber;
+            updateGuessDisplay();
+        }
+
+        function provideHint() {
+            const hintInput = document.getElementById("hintInput");
+            const userHint = parseInt(hintInput.value);
+
+            if (!isNaN(userHint) && userHint >= aiMinGuess && userHint <= aiMaxGuess) {
+                if (userHint < correctNumber) {
+                    aiMinGuess = userHint + 1;
+                } else {
+                    aiMaxGuess = userHint - 1;
+                }
+                aiGuess = Math.floor((aiMinGuess + aiMaxGuess) / 2);
+                updateGuessDisplay();
+            }
+
+            hintInput.value = "";
+        }
+
+        function updateGuessDisplay() {
+            const guessDisplay = document.getElementById("guessDisplay");
+            guessDisplay.textContent = aiGuess;
+
+            if (aiGuess === correctNumber) {
+                guessDisplay.textContent = `AI Nailed it! (${aiGuess})`;
+            }
+        }
+
+        function generateRandomNumber(min, max) {
+            return Math.floor(Math.random() * (max - min + 1)) + min;
+        }
+    </script>
+    <footer>
+        &copy; 2023 PowerStyleHTML. All rights reserved.
+    </footer>
+</body>
+
+</html>
+In this version, I've added an input field and a "Give Hint" button to allow the user to provide hints to the AI. When
+the user provides a hint, the AI adjusts its guessing strategy based on the hint. If the hint is lower than the correct
+number, the AI updates its minimum guess; if the hint is higher, the AI updates its maximum guess. The AI then
+recalculates its guess based on the refined range.
+
+Additionally, I've added an updateGuessDisplay() function to manage the update of the guess display in one place.
+
+This version encourages more interaction between the user and the AI, as the user can actively guide the AI's guessing
+process through hints.
